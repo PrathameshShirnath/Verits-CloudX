@@ -59,7 +59,6 @@ bucket=$1
 echo -e "${YEL}=======================================================================================${RESET}\n"
 echo -e "$c- \e[1;4m$bucket${RESET}"
 
-echo -e "\n\n\e[40;38;5;82m>>UNAUTHENTICATED ACCESS CHECK<<${RESET}\n"
 echo -e "\n\e[30;48;5;82mTesting for Directory Listing . . .${RESET}\n"
 open=$(curl -s "$bucket.s3.amazonaws.com" | xmllint --format -)
 if [[ $open == *"<Message>Access Denied</Message>"* ]]; then
@@ -81,73 +80,6 @@ else
   echo -e "${WHITE}Uploaded successfully!!${RESET}"	  
 fi
 
-
-# echo -e "\n\n\e[40;38;5;82m>>AUTHENTICATED ACCESS CHECK<<${RESET}\n"
-
-# echo -e "\n\e[30;48;5;82mTesting for Directory Listing . . .${RESET}\n"
-# a=$(aws s3 ls s3://$bucket --recursive 2>&1)
-# if [[ $a == *"An error"* ]]; then
-#   echo -e "${RED}Failed!!!${RESET}\n"
-# else
-#   echo -e "${WHITE}$a${RESET}"
-#   juicy "$a"
-
-#   if [[ $do == 1 ]];
-#   then
-#     direc=$(mkdir -p $bucket 2>&1)
-#     down=$(aws s3 sync s3://$bucket $bucket --quiet 2>&1)
-#     down2=$(ls $PWD/$bucket/)
-#     echo -e "\n\e[30;48;5;82mTrying to dump the full bucket${RESET}\n"
-#     if [ -z "$down2" ]; then
-#        echo -e "${RED}Failed!!!${RESET}\n"
-#     else
-#        echo -e "${WHITE}Bucket Dumped to $PWD/$bucket/ directory ${RESET}"
-#     fi		
-#   fi 
-
-#   if [[ $abc == 1 ]];
-#   then
-#     obje "$bucket"		
-#   fi 
-  	 
-# fi
-
-
-# echo -e "\n\e[30;48;5;82mTrying to fetch Bucket Access Control List . . .${RESET}\n"
-# x=$(aws s3api get-bucket-acl --bucket $bucket 2>&1)
-# if [[ $x == *"An error"* ]]; then
-#   echo -e "${RED}Failed!!!${RESET}\n"
-# else
-#   echo -e "${WHITE}$x${RESET}"  
-# fi
-
-
-# echo -e "\n\e[30;48;5;82mTrying to fetch Bucket Policy . . .${RESET}\n"
-# xp=$(aws s3api get-bucket-policy --bucket $bucket 2>&1)
-# if [[ $xp == *"An error"* ]]; then
-#   echo -e "${RED}Failed!!!${RESET}\n"
-# else
-#   echo -e "${WHITE}$xp${RESET}"  
-# fi
-
-# echo -e "\n\e[30;48;5;82mTesting for file upload . . .${RESET}\n"
-# y=$(aws s3 cp youhavebeenhacked.png s3://$bucket 2>&1)
-# if [[ $y == *"upload failed"* ]]; then
-#   echo -e "${RED}Failed!!!${RESET}\n"
-# else
-#   echo -e "${WHITE}$y${RESET}"
-# fi
-
-# if [[ $abcd == 1 ]];
-# then
-#    echo -e "\n\e[30;48;5;82mTrying to change bucket acl${RESET}\n"
-#    ac=$(aws s3api put-bucket-acl --bucket $bucket --grant-full-control uri=http://acs.amazonaws.com/groups/global/AllUsers 2>&1)
-#    if [[ $ac == *"An error"* ]]; then
-#      echo -e "${RED}Failed!!!${RESET}\n"
-#    else
-#      echo -e "\n${WHITE}ACL changed to FULL CONTROL for everyone${RESET}\n"  
-#    fi 		
-# fi 
 
 
 }
